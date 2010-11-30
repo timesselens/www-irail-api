@@ -37,7 +37,7 @@ sub parse_response {
         /xml/i and return XMLout $obj, RootName=>'stations', GroupTags => { stations => 'station' };
         /json/i and return JSON::XS->new->ascii->pretty->allow_nonref->encode($obj);
         /yaml/i and return freeze $obj;
-        /perl/i and return $obj;
+        /perl/i and return $obj->{station};
     }
 
     return $obj; # default to perl
@@ -72,7 +72,9 @@ Has no arguments, requests the whole list of stations from the API
 =method parse_response( I<{$http_response}>, I<"dataType">, I<filter()> )
 
 parses the HTTP::Response you got back from the server, which if all went well contains XML.
-That XML is then transformed into other data formats
+That XML is then transformed into other data formats.
+
+Note that the perl data format returns the data unnested for easier access.
 
 =for :list
 * xml
