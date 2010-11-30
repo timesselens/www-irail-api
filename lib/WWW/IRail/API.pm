@@ -45,7 +45,7 @@ sub lookup_stations {
     my %opts = ref $_[0] eq 'HASH' ? %{$_[0]} : @_;
 
     # if the 2nd argumnet is a sub, use it as the callback, but only if the first was a {} 
-    my $callback = ref $_[0] eq 'HASH' and ref $_[1] eq 'CODE' ? $_[1] : $opts{callback};
+    my $callback = ref $_[0] eq 'HASH' && ref $_[1] eq 'CODE' ? $_[1] : $opts{callback};
 
     # either the station or search parameter can be used to filter
     my $re = $opts{station} || $opts{filter};
