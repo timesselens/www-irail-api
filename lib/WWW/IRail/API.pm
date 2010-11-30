@@ -48,7 +48,7 @@ sub lookup_stations {
     my $callback = ref $_[0] eq 'HASH' && ref $_[1] eq 'CODE' ? $_[1] : $opts{callback};
 
     # either the station or search parameter can be used to filter
-    my $re = $opts{station} || $opts{filter};
+    my $re = $opts{station} || $opts{filter} || '.';
 
     # check the filter is a sub or match using default sub
     my $search_cb = ref $opts{filter} eq 'CODE' ? $opts{filter} : sub { m/$re/i };
