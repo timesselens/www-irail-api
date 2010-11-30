@@ -40,15 +40,24 @@ sub new {
 
 sub lookup_stations {
     my $self = shift;
-    my %opts = ref $_[0] ? %{$_[0]} : @_;
 
-    my $callback = ref $_[1] eq 'CODE' ? $_[1] : $opts{callback};
+    # auto dereference first argument from hashref to hash
+    my %opts = ref $_[0] eq 'HASH' ? %{$_[0]} : @_;
+
+    # if the 2nd argumnet is a sub, use it as the callback, but only if the first was a {} 
+    my $callback = ref $_[0] eq 'HASH' and ref $_[1] eq 'CODE' ? $_[1] : $opts{callback};
+
+    # either the station or search parameter can be used to filter
+    my $re = $opts{station} || $opts{filter};
+
+    # check the filter is a sub or match using default sub
+    my $search_cb = ref $opts{filter} eq 'CODE' ? $opts{filter} : sub { m/$re/i };
 
     my $http_req = WWW::IRail::API::Stations::make_request();
     my $http_res = $self->{_client}->process($http_req, $callback);
     my $response = WWW::IRail::API::Stations::parse_response( $http_res, 
                                                               $opts{dataType} || $self->{dataType},
-                                                              sub { return /$opts{station}/i } );
+                                                              $search_cb );
     return $response;
 }
 
@@ -191,6 +200,25 @@ call the callback and go async from there.
 If date matches C</\w/> it will hand over parsing to L<DateTime::Format::Natural>. 
 for example: date => 'friday at 6pm';
 
+=head1 METHODS
+
+=method new(I<key => 'value'> | I<{key => 'value'}>)
+
+Constructor. Should normally be used without arguments, but if required you
+could override some internals.
+
+    my $irail = new WWW::IRail::API( _client => 'LWP', dataType => 'JSON' );
+
+=method lookup_stations(I<key => 'value'> | I<{key => 'value'}>)
+
+Method which takes a string or a hash(ref) and returns a list of stations in the set C<dataType>.
+
+    my @list = $irail->lookup_stations(filter => "brussel");
+    my @list = $irail->lookup_stations(filter => qr/brussel/i);
+    my @list = $irail->lookup_stations(filter => sub { /brussel/i } );
+
+    my $json_string = $irail->lookup_stations(filter => qr/./, dataType => 'JSON');
+
 =head1 LIMITATIONS
 
 =for :list
@@ -219,11 +247,8 @@ Example you can run from the commandline to get you started quickly
 =head1 SEE ALSO
 
 =for :list
-* L<LWP>
-* L<HTTP::Request>
-* L<HTTP::Response>
-* L<XML::Simple>
-* L<JSON::XS>
-* L<YAML>
-* L<DateTime::Format::Natural>
+* L<WWW::IRail::API::Stations>
+* L<WWW::IRail::API::Connections>
+* L<WWW::IRail::API::Vehicle>
+* L<WWW::IRail::API::Liveboard>
 
