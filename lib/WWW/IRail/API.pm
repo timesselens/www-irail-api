@@ -1,5 +1,6 @@
 package WWW::IRail::API;
 use strict;
+use warnings;
 use Carp qw/croak/;
 use WWW::IRail::API::Stations;
 use WWW::IRail::API::Connections;
