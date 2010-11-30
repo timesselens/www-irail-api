@@ -85,8 +85,6 @@ Note that the perl data format returns the data unnested for easier access.
 
 =head3 example of output when dataType = 'xml'
 
-=begin xml
-
     <stations>
       <station>\'S GRAVENBRAKEL</station>
       <station>AALST</station>
@@ -96,11 +94,8 @@ Note that the perl data format returns the data unnested for easier access.
 
     </stations>
     
-=end xml
 
 =head3 example of output when dataType = 'XML'
-
-=begin xml
 
     <stations timestamp="1291047694" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="stations.xsd">
       <station id="BE.NMBS.82" location="50.605075 4.137658" locationX="4.137658" locationY="50.605075">\'S GRAVENBRAKEL</station>
@@ -112,11 +107,7 @@ Note that the perl data format returns the data unnested for easier access.
     </stations>
 
 
-=end xml
-
 =head3 example of output when dataType = 'JSON'
-
-=begin json
 
     { 
       "station" : [
@@ -128,12 +119,7 @@ Note that the perl data format returns the data unnested for easier access.
       ]
     }
 
-
-=end json
-
 =head3 example of output when dataType = 'YAML'
-
-=begin YAML
 
     station:
       - "\'S GRAVENBRAKEL"
@@ -142,25 +128,17 @@ Note that the perl data format returns the data unnested for easier access.
       - AALTER
       ...
 
-=end YAML
-
 
 =head3 example of output when dataType="perl" (default)
 
-=begin perl
-
-    $VAR1 = {
-          'station' => [
-                       '\'S GRAVENBRAKEL',
-                       'AALST',
-                       'AALST KERREBROEK',
-                       'AALTER',
-                       'AARLEN',
-                       'AARSCHOT',
-                        # ...
+    $VAR1 = [
+               '\'S GRAVENBRAKEL',
+               'AALST',
+               'AALST KERREBROEK',
+               'AALTER',
+               'AARLEN',
+               'AARSCHOT',
+               # ...
             ]
-    };
-
-=end perl
 
 =cut
