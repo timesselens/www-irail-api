@@ -53,8 +53,17 @@ __END__
 WWW::IRail::API::Stations - HTTP::Request builder and HTTP::Response parser for the IRail API Station data
 
 =head1 SYNOPSIS
-    
-    make_request();
+
+    use WWW::IRail::API::Stations;
+    use LWP::UserAgent();
+
+    my $ua = new LWP::UserAgent();
+       $ua->timeout(20);
+             
+    my $station_req = WWW::IRail::API::Stations::make_request();
+    my $http_resp = $ua->request($station_req);
+    my $result = WWW::IRail::API::Stations::parse_response($http_resp,'perl');
+                         
 
 =head1 DESCRIPTION
 
@@ -142,3 +151,8 @@ Note that the perl data format returns the data unnested for easier access.
             ]
 
 =cut
+
+=head1 SEE ALSO
+
+=for :list
+* L<WWW::IRail::API>

@@ -6,11 +6,13 @@ use Data::Dumper;
 use JSON::XS;
 use WWW::IRail::API qw/irail/;
 use WWW::IRail::API::Client::LWP;
+use LWP::UserAgent;
   
 #########################################################################################################
 # setup
 #########################################################################################################
 use_ok('WWW::IRail::API::Client::LWP');
+use_ok('WWW::IRail::API::Stations');
 
 my $irail = new WWW::IRail::API;
 
@@ -20,7 +22,27 @@ my $irail = new WWW::IRail::API;
 isa_ok($irail,'WWW::IRail::API');
 
 #########################################################################################################
-# station tests
+# standalone station tests
+#########################################################################################################
+
+my $ua = new LWP::UserAgent();
+   $ua->timeout(20);
+   $ua->agent("WWW::IRail::API::_test/0.01");
+
+   my $station_req = WWW::IRail::API::Stations::make_request();
+   my $resp = $ua->request($station_req);
+   my $result = WWW::IRail::API::Stations::parse_response($resp,'perl');
+
+   ok($result, "result must be defined");
+   ok(ref $result eq 'ARRAY', "returned type must be an ARRAY");
+   ok(scalar $result, "result must contain more then one element");
+
+   ok( (scalar grep { /brussel/i } @$result) > 1, "result must contain some stations m/brussel/i");
+
+
+
+#########################################################################################################
+# WWW::IRail::API station tests
 #########################################################################################################
 
 my $irail_0 = new WWW::IRail::API;
