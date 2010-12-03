@@ -12,7 +12,14 @@ use YAML qw/freeze/;
 sub make_request {
     my %attr = ref $_[0] eq 'HASH' ? %{$_[0]} : @_;
 
-    my $url = 'http://dev.api.irail.be/stations/';
+    $attr{lang} ||= 'en';
+
+    croak "lang must match qr/(en | nl | fr | de)/x" unless $attr{lang} =~ m/en | nl | fr | de/x;
+
+    my $url = 'http://dev.api.irail.be/stations/?'.
+               join '&', map { $_.'='.$attr{$_} }
+               qw/lang/;
+
 
     my $req = new HTTP::Request(GET => $url);
 
