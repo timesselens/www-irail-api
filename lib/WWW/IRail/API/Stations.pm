@@ -29,7 +29,7 @@ sub make_request {
 sub parse_response {
     my ($http_response, $dataType, $filter) = @_;
 
-    my $obj = XMLin($http_response->content,
+    my $obj = XMLin($http_response->decoded_content,
         NoAttr => $dataType eq 'XML' ? 0 : 1,
         SuppressEmpty => '',
         NormaliseSpace => 2,
