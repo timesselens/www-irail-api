@@ -43,13 +43,14 @@ my %stations; for (@$station_list) { next if $_->{f} eq 1; $stations{$_->{i}}{lc
 ## [NL] test ###########################################################################################
                                                                                                        
 my $stations_8 = $irail_0->lookup_stations(lang => 'nl');
+print Dumper $stations_8;
 foreach my $id (keys %stations) {
     my $name = $stations{$id}{'nl'};
     next unless $name;
 
     # broaden the match
     (my $lesser_name = $name) =~ s/[\ \-]//g;
-    ok((grep { /^$lesser_name$/ } map { s/[\ \-]//g; $_; } (@$stations_8)), "station named '$name' [NL] should exist");
+    ok((grep { /^$lesser_name$/i } map { s/[\ \-]//g; $_; } (@$stations_8)), "station named '$name' [NL] should exist");
 }
 
 ## [FR] test ###########################################################################################
@@ -60,7 +61,7 @@ foreach my $id (keys %stations) {
 
     # broaden the match
     (my $lesser_name = $name) =~ s/[\ \-]//g;
-    ok((grep { /^$lesser_name$/ } map { s/[\ \-]//g; $_; } (@$stations_9)), "station named '$name' [FR] should exist");
+    ok((grep { /^$lesser_name$/i } map { s/[\ \-]//g; $_; } (@$stations_9)), "station named '$name' [FR] should exist");
 }
 
 ## [EN] test ###########################################################################################
@@ -71,7 +72,7 @@ foreach my $id (keys %stations) {
 
     # broaden the match
     (my $lesser_name = $name) =~ s/[\ \-]//g;                                                                                  
-    ok((grep { /^$lesser_name$/ } map { s/[\ \-]//g; $_; } (@$stations_10)), "station named '$name' [EN] should exist");
+    ok((grep { /^$lesser_name$/i } map { s/[\ \-]//g; $_; } (@$stations_10)), "station named '$name' [EN] should exist");
 }
 
 ## [DE] test ###########################################################################################
@@ -84,7 +85,7 @@ foreach my $id (keys %stations) {
     my $lesser_name = $name;
     $lesser_name =~ s/\s*\(.*?\)\s*//g; # de version uses BRUSSEL (BRUXELLES)-OUEST, convert to BRUSSEL-OUEST
     $lesser_name =~ s/[\ \-]//g;
-    ok((grep { /^$lesser_name$/ } map { s/[\ \-]//g; $_; } (@$stations_11)), "station named '$name' [DE] should exist");
+    ok((grep { /^$lesser_name$/i } map { s/[\ \-]//g; $_; } (@$stations_11)), "station named '$name' [DE] should exist");
 }
 
 
