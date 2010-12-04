@@ -9,6 +9,7 @@ use JSON::XS;
 use XML::Simple;
 use YAML qw/freeze/;
 
+our $url_base = $ENV{IRAIL_BASE} || 'http://dev.api.irail.be';
 
 sub make_request {
     my %attr = ref $_[0] eq 'HASH' ? %{$_[0]} : @_;
@@ -35,7 +36,7 @@ sub make_request {
 
     croak 'date could not be parsed' unless $attr{date} =~ m/^\d{6}$/ and int($attr{date}) != 0;
 
-    my $url = 'http://dev.api.irail.be/connections/?'.
+    my $url = $url_base . '/connections/?'.
                 join '&', map { $_.'='.$attr{$_} } 
                 qw/from to date time/;
 

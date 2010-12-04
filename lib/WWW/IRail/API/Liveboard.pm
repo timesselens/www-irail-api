@@ -6,6 +6,8 @@ use JSON::XS;
 use XML::Simple;
 use YAML qw/freeze/;
 
+our $url_base = $ENV{IRAIL_BASE} || 'http://dev.api.irail.be';
+
 sub make_request {
     my %attr = ref $_[0] eq 'HASH' ? %{$_[0]} : @_;
 
@@ -17,7 +19,7 @@ sub make_request {
 
     my %urimap = ( direction => 'arrdep' );
 
-    my $url = 'http://dev.api.irail.be/liveboard/?'.
+    my $url = $url_base .'/liveboard/?'.
                 join '&', map { ($urimap{$_} || $_) .'='.$attr{$_} } 
                 qw/station direction/;
 

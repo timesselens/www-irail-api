@@ -8,6 +8,7 @@ use JSON::XS;
 use XML::Simple;
 use YAML qw/freeze/;
 
+our $url_base = $ENV{IRAIL_BASE} || "http://dev.api.irail.be";
 
 sub make_request {
     my %attr = ref $_[0] eq 'HASH' ? %{$_[0]} : @_;
@@ -16,7 +17,7 @@ sub make_request {
 
     croak "lang must match qr/(en | nl | fr | de)/x" unless $attr{lang} =~ m/en | nl | fr | de/x;
 
-    my $url = 'http://dev.api.irail.be/stations/?'.
+    my $url =  $url_base . '/stations/?'.
                join '&', map { $_.'='.$attr{$_} }
                qw/lang/;
 

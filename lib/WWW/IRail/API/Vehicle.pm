@@ -8,6 +8,7 @@ use JSON::XS;
 use XML::Simple;
 use YAML qw/freeze/;
 
+our $url_base = $ENV{IRAIL_BASE} || 'http://dev.api.irail.be';
 
 sub make_request {
     my %attr = ref $_[0] eq 'HASH' ? %{$_[0]} : @_;
@@ -16,7 +17,7 @@ sub make_request {
 
     $attr{id} ||= $attr{vehicle};
 
-    my $url = 'http://dev.api.irail.be/vehicle/?'.
+    my $url = $url_base . '/vehicle/?'.
                 join '&', map { $_.'='.$attr{$_} } 
                 qw/id/;
 
