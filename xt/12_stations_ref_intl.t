@@ -49,7 +49,7 @@ foreach my $id (keys %stations) {
 
     # broaden the match
     (my $lesser_name = $name) =~ s/[\ \-]//g;
-    ok((grep { /^$lesser_name$/ } map { s/[\ \-]//g; $_; } (@$stations_8)), "station named '$name' [NL] should exist");
+    ok((grep { /^$lesser_name$/ } map { s/[\ \-]//g; $_; } (@$stations_8)), "station named '$name' [for lang NL] should exist");
 }
 
 ## [FR] test ###########################################################################################
@@ -60,7 +60,7 @@ foreach my $id (keys %stations) {
 
     # broaden the match
     (my $lesser_name = $name) =~ s/[\ \-]//g;
-    ok((grep { /^$lesser_name$/ } map { s/[\ \-]//g; $_; } (@$stations_9)), "station named '$name' [FR] should exist");
+    ok((grep { /^$lesser_name$/ } map { s/[\ \-]//g; $_; } (@$stations_9)), "station named '$name' [for lang FR] should exist");
 }
 
 ## [EN] test ###########################################################################################
@@ -71,7 +71,7 @@ foreach my $id (keys %stations) {
 
     # broaden the match
     (my $lesser_name = $name) =~ s/[\ \-]//g;                                                                                  
-    ok((grep { /^$lesser_name$/ } map { s/[\ \-]//g; $_; } (@$stations_10)), "station named '$name' [EN] should exist");
+    ok((grep { /^$lesser_name$/ } map { s/[\ \-]//g; $_; } (@$stations_10)), "station named '$name' [for lang EN] should exist");
 }
 
 ## [DE] test ###########################################################################################
