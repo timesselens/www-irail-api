@@ -24,11 +24,12 @@ my $json_string = $js;                              # js is munged to JSON now
 
 # decode the json_strong
 my $station_list = decode_json($json_string);
+# print Dumper $station_list; # for debugging
 
 # map to a handy structure
 my %stations; for (@$station_list) { $stations{$_->{i}}{lc $_->{l}} = $_->{d}; }
 
-# print Dumper(\%stations); for debugging
+# print Dumper(\%stations); # for debugging
 
 # print the station list, give FR priority 
 foreach my $id (sort { $a <=> $b } keys %stations) {
