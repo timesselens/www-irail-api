@@ -38,7 +38,7 @@ my $json_string = $js;                              # js is munged to JSON now
 my $station_list = decode_json($json_string);
 
 # map to a handy structure
-my %stations; for (@$station_list) { next if $_->{f} eq 1; $stations{$_->{i}}{lc $_->{l}} = $_->{d}; }
+my %stations; for (@$station_list) { next unless $_->{f} eq 1; $stations{$_->{i}}{lc $_->{l}} = $_->{d}; }
 
 ## [NL] test ###########################################################################################
                                                                                                        
