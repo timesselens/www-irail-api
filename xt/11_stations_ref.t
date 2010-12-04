@@ -43,7 +43,8 @@ my %stations; for (@$station_list) { next if $_->{f} eq 1; $stations{$_->{i}}{lc
 ## [NL] test ###########################################################################################
                                                                                                        
 my $stations_8 = $irail_0->lookup_stations(lang => 'nl');
-print Dumper $stations_8;
+diag "lookup_stations(lang => 'nl') returns: " , explain $stations_8;
+
 foreach my $id (keys %stations) {
     my $name = $stations{$id}{'nl'};
     next unless $name;
@@ -55,6 +56,8 @@ foreach my $id (keys %stations) {
 
 ## [FR] test ###########################################################################################
 my $stations_9 = $irail_0->lookup_stations(lang => 'fr');
+diag "lookup_stations(lang => 'fr') returns: " , explain $stations_9;
+
 foreach my $id (keys %stations) {
     my $name = $stations{$id}{'fr'};
     next unless $name;
@@ -66,6 +69,8 @@ foreach my $id (keys %stations) {
 
 ## [EN] test ###########################################################################################
 my $stations_10 = $irail_0->lookup_stations(lang => 'en');
+diag "lookup_stations(lang => 'en') returns: " , explain $stations_10;
+
 foreach my $id (keys %stations) {
     my $name = $stations{$id}{'en'};
     next unless $name;
@@ -77,6 +82,8 @@ foreach my $id (keys %stations) {
 
 ## [DE] test ###########################################################################################
 my $stations_11 = $irail_0->lookup_stations(lang => 'de');
+diag "lookup_stations(lang => 'de') returns: " , explain $stations_11;
+
 foreach my $id (keys %stations) {
     my $name = $stations{$id}{'de'};
     next unless $name;
