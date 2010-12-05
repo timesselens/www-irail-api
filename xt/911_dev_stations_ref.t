@@ -1,8 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-BEGIN { $ENV{IRAIL_BASE} = "http://api.irail.be"; $ENV{IRAIL_UA} = "WWW::IRail::API::test"; }
-
+BEGIN { $ENV{IRAIL_BASE} = "http://dev.api.irail.be"; $ENV{IRAIL_UA} = "WWW::IRail::API::test"; }
 use Test::More;
 use Test::Deep;
 use Data::Dumper;
@@ -40,7 +39,7 @@ my $json_string = $js;                              # js is munged to JSON now
 my $station_list = decode_json($json_string);
 
 # map to a handy structure
-my %stations; for (@$station_list) { next unless $_->{f} eq 1; $stations{$_->{i}}{lc $_->{l}} = $_->{d}; }
+my %stations; for (@$station_list) { next if $_->{f} eq 1; $stations{$_->{i}}{lc $_->{l}} = $_->{d}; }
 
 ## [NL] test ###########################################################################################
                                                                                                        
@@ -53,7 +52,7 @@ foreach my $id (keys %stations) {
 
     # broaden the match
     (my $lesser_name = $name) =~ s/[\ \-]//g;
-    ok((grep { /^$lesser_name$/i } map { s/[\ \-]//g; $_; } (@$stations_8)), "station named '$name' [for lang NL] should exist");
+    ok((grep { /^$lesser_name$/i } map { s/[\ \-]//g; $_; } (@$stations_8)), "station named '$name' [NL] should exist");
 }
 
 ## [FR] test ###########################################################################################
@@ -66,7 +65,7 @@ foreach my $id (keys %stations) {
 
     # broaden the match
     (my $lesser_name = $name) =~ s/[\ \-]//g;
-    ok((grep { /^$lesser_name$/i } map { s/[\ \-]//g; $_; } (@$stations_9)), "station named '$name' [for lang FR] should exist");
+    ok((grep { /^$lesser_name$/i } map { s/[\ \-]//g; $_; } (@$stations_9)), "station named '$name' [FR] should exist");
 }
 
 ## [EN] test ###########################################################################################
@@ -79,7 +78,7 @@ foreach my $id (keys %stations) {
 
     # broaden the match
     (my $lesser_name = $name) =~ s/[\ \-]//g;                                                                                  
-    ok((grep { /^$lesser_name$/i } map { s/[\ \-]//g; $_; } (@$stations_10)), "station named '$name' [for lang EN] should exist");
+    ok((grep { /^$lesser_name$/i } map { s/[\ \-]//g; $_; } (@$stations_10)), "station named '$name' [EN] should exist");
 }
 
 ## [DE] test ###########################################################################################

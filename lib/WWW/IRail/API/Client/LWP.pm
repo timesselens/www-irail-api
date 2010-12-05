@@ -12,7 +12,8 @@ sub new {
     my %attr = ( _client => new LWP::UserAgent);
         
     $attr{_client}->timeout(10);
-    $attr{_client}->agent("WWW::IRail::API::Client::LWP/$VERSION ");
+    warn "creating new client with '".$ENV{IRAIL_UA}."'";
+    $attr{_client}->agent( ($ENV{IRAIL_UA} || "WWW::IRail::API::Client::LWP/$VERSION ") );
                                        
     return bless {%attr}, $class;
 }

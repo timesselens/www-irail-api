@@ -1,6 +1,9 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
+
+BEGIN { $ENV{IRAIL_BASE} = "http://api.irail.be"; $ENV{IRAIL_UA} = "WWW::IRail::API::test"; }
+
 use Test::More;
 use Test::Deep;
 use Data::Dumper;

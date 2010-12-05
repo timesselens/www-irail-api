@@ -1,7 +1,6 @@
 use strict;
 use warnings;
-
-BEGIN { $ENV{IRAIL_BASE} = "http://api.irail.be"; $ENV{IRAIL_UA} = "WWW::IRail::API::test"; }
+BEGIN { $ENV{IRAIL_BASE} = "http://dev.api.irail.be"; $ENV{IRAIL_UA} = "WWW::IRail::API::test "; }
 
 use Test::More;
 use Test::Deep;
@@ -25,14 +24,13 @@ my $irail = new WWW::IRail::API;
 #########################################################################################################
 isa_ok($irail,'WWW::IRail::API');
 
-
 #########################################################################################################
 # standalone station tests
 #########################################################################################################
 
 my $ua = new LWP::UserAgent();
    $ua->timeout(20);
-   $ua->agent("WWW::IRail::API::test");
+   $ua->agent("WWW::IRail::API::test ");
 
    my $station_req = WWW::IRail::API::Stations::make_request();
    my $resp = $ua->request($station_req);
