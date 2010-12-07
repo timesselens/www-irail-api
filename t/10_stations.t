@@ -66,7 +66,7 @@ ok((grep { /brussel noord/i } (@$stations_0)), "brussel noord (NL) must be one o
 for (@$stations_0) {
     like($_, qr/^['\w]/, "station named '$_' [NL] should start with ['\\w]");
     like($_, qr/\w$/, "station named '$_' [NL] should not end with anything other than [\\w]");
-    like($_, qr/^('\w|\w)[\w\ \-]*\w$/, "station named '$_' [NL] should match ".'qr/^(\'\w|\w)[\w\ \-]*\w$/');
+    like($_, qr/^('\w|\w)[\w'\ \-]*\w$/, "station named '$_' [NL] should match ".'qr/^(\'\w|\w)[\w\'\ \-]*\w$/');
 }
 
 ## lookup using sub as filter ...........................................................................
@@ -105,7 +105,7 @@ ok((grep { /bruxelles nord/i } (@$stations_4)), "bruxelles nord (FR) must be one
 for (@$stations_4) {
     like($_, qr/^['\w]/, "station named '$_' [FR] should start with ['\\w]");
     like($_, qr/\w$/, "station named '$_' [FR] should not end with anything other than [\\w]");
-    like($_, qr/^('\w|\w)[\w\ \-]*\w$/, "station named '$_' [FR] should match ".'qr/^(\'\w|\w)[\w\ \-]*\w$/');
+    like($_, qr/^('\w|\w)[\w'\ \-]*\w$/, "station named '$_' [FR] should match ".'qr/^(\'\w|\w)[\w\'\ \-]*\w$/');
 }
 
 ## lookup using sub as filter ...........................................................................
@@ -142,7 +142,7 @@ ok((grep { /brussels north/i } (@$stations_8)), "brussels north (EN) must be one
 for (@$stations_8) {
     like($_, qr/^['\w]/, "station named '$_' [EN] should start with ['\\w]");
     like($_, qr/\w$/, "station named '$_' [EN] should not end with anything other than [\\w]");
-    like($_, qr/^('\w|\w)[\w\ \-]*\w$/, "station named '$_' [EN] should match ".'qr/^(\'\w|\w)[\w\ \-]*\w$/');
+    like($_, qr/^('\w|\w)[\w'\ \-]*\w$/, "station named '$_' [EN] should match ".'qr/^(\'\w|\w)[\w\'\ \-]*\w$/');
 }
 
 
