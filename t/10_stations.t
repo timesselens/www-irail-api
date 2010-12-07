@@ -1,7 +1,11 @@
 use strict;
 use warnings;
 
-BEGIN { $ENV{IRAIL_BASE} = "http://api.irail.be"; $ENV{IRAIL_UA} = "WWW::IRail::API::test"; }
+BEGIN { 
+    $ENV{IRAIL_BASE} = "http://api.irail.be"; 
+    $ENV{IRAIL_UA} = "WWW::IRail::API::test"; 
+    $ENV{IRAIL_NORMALISE_SPACE} = -1;
+}
 
 use Test::More;
 use Test::Deep;
@@ -58,6 +62,12 @@ my $stations_0 = $irail_0->lookup_stations(lang => 'nl');
 ok(ref $stations_0 eq 'ARRAY', "result must point to array");
 ok(scalar @$stations_0 > 100, "there must be at least a hundred stations") or diag "[". (join ", ", @$stations_0) ."]";
 ok((grep { /brussel noord/i } (@$stations_0)), "brussel noord (NL) must be one of them") or diag "[". (join ", ", @$stations_0) ."]";
+    
+for (@$stations_0) {
+    like($_, qr/^['\w]/, "station named '$_' [NL] should start with ['\\w]");
+    like($_, qr/\w$/, "station named '$_' [NL] should not end with anything other than [\\w]");
+    like($_, qr/^('\w|\w)[\w\ \-]*\w$/, "station named '$_' [NL] should match ".'qr/^(\'\w|\w)[\w\ \-]*\w$/');
+}
 
 ## lookup using sub as filter ...........................................................................
 my $stations_1 = $irail_0->lookup_stations(lang => 'nl', filter => sub { /brussel/i } );
@@ -92,6 +102,11 @@ my $stations_4 = $irail_0->lookup_stations(lang => 'fr');
 ok(ref $stations_4 eq 'ARRAY', "result must point to array");
 ok(scalar @$stations_4 > 100, "there must be at least a hundred stations") or diag "[". (join ", ", @$stations_4) ."]";
 ok((grep { /bruxelles nord/i } (@$stations_4)), "bruxelles nord (FR) must be one of them") or diag explain $stations_4;
+for (@$stations_4) {
+    like($_, qr/^['\w]/, "station named '$_' [FR] should start with ['\\w]");
+    like($_, qr/\w$/, "station named '$_' [FR] should not end with anything other than [\\w]");
+    like($_, qr/^('\w|\w)[\w\ \-]*\w$/, "station named '$_' [FR] should match ".'qr/^(\'\w|\w)[\w\ \-]*\w$/');
+}
 
 ## lookup using sub as filter ...........................................................................
 my $stations_5 = $irail_0->lookup_stations(lang => 'fr', filter => sub { /bruxelles/i } );
@@ -116,6 +131,19 @@ ok(ref $stations_7 eq 'ARRAY', "result must point to array");
 ok(scalar @$stations_7 > 2, "there must be at least two stations with brussel in their name") or diag "[". (join ", ", @$stations_7) ."]";
 ok((grep { /bruxelles nord/i } (@$stations_7)), "bruxelles nord (FR) must be in the partial set") or diag "[". (join ", ", @$stations_7) ."]";
 ok((not grep { /oostende/i } (@$stations_7)), "oostende must not be in the set") or diag "[". (join ", ", @$stations_7) ."]";
+
+
+## lookup all [EN] ######################################################################################
+my $stations_8 = $irail_0->lookup_stations(lang => 'en');
+
+ok(ref $stations_8 eq 'ARRAY', "result must point to array");
+ok(scalar @$stations_8 > 100, "there must be at least a hundred stations") or diag "[". (join ", ", @$stations_8) ."]";
+ok((grep { /brussels north/i } (@$stations_8)), "brussels north (EN) must be one of them") or diag explain $stations_8;
+for (@$stations_8) {
+    like($_, qr/^['\w]/, "station named '$_' [EN] should start with ['\\w]");
+    like($_, qr/\w$/, "station named '$_' [EN] should not end with anything other than [\\w]");
+    like($_, qr/^('\w|\w)[\w\ \-]*\w$/, "station named '$_' [EN] should match ".'qr/^(\'\w|\w)[\w\ \-]*\w$/');
+}
 
 
 ## return type JSON #####################################################################################
