@@ -33,7 +33,7 @@ sub parse_response {
     my $obj = XMLin($http_response->decoded_content,
         NoAttr => $dataType eq 'XML' ? 0 : 1,
         SuppressEmpty => '',
-        NormaliseSpace => 2,
+        NormaliseSpace => $ENV{IRAIL_NORMALISE_SPACE} || 2,
         ForceArray => [ 'station' ],
         GroupTags => { stations => 'station'},
         KeyAttr => [],
