@@ -18,8 +18,8 @@ sub make_request {
     croak 'to is a required argument' unless defined $attr{to};
 
     # reformat several different date input formats
-    if ($attr{date} =~ m/^\d+$/ ) { $attr{date} = time2str( "%d%m%y", $attr{data} ) }
-    elsif ($attr{date} =~ m/^\d{2}(\d{2})\W?(\d{2})\W?(\d{2})$/) {  $attr{data} = "$3$2$1" }
+    if ($attr{date} =~ m/^\d+$/ ) { $attr{date} = time2str( "%d%m%y", $attr{date} ) }
+    elsif ($attr{date} =~ m/^\d{2}(\d{2})\W?(\d{2})\W?(\d{2})$/) {  $attr{date} = "$3$2$1" }
 
     # reformat time input formats
     if ($attr{date} =~ m/(\d{2})\W?(\d{2})/) { $attr{date} = "$1$2" }
