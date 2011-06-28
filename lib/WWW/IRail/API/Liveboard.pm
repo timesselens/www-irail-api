@@ -6,7 +6,7 @@ use JSON::XS;
 use XML::Simple;
 use YAML qw/freeze/;
 
-our $url_base = $ENV{IRAIL_BASE} || 'http://dev.api.irail.be';
+our $url_base = $ENV{IRAIL_BASE} || 'http://api.irail.be';
 
 sub make_request {
     my %attr = ref $_[0] eq 'HASH' ? %{$_[0]} : @_;
